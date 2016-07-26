@@ -22,6 +22,51 @@ Or install it yourself as:
 
 ## Usage
 
+### [Enable Sessions](http://www.sinatrarb.com/faq.html#sessions)
+
+Since 0.2.0, this gem doesn't automatically enable sessions.
+This means **you have to enable sessions in your app.**
+
+This is so you can choose how to enable them, like using `Rack::Session::Cookie` if you need.
+
+Enable Sinatra built-in sessions:
+
+```ruby
+enable :sessions
+```
+
+Or, if you need to set additional parameters for sessions, like expiration date, use `Rack::Session::Cookie` directly instead of `enable :sessions` (example from Rack documentation):
+
+```ruby
+use Rack::Session::Cookie, :key => 'rack.session',
+                           :domain => 'foo.com',
+                           :path => '/',
+                           :expire_after => 2592000, # In seconds
+                           :secret => 'change_me'
+```
+
+#### Advanced Sinatra built-in sessions parameters
+
+Here's how to do if you want to use Sinatra's built-in sessions, instead of `Rack::Session::Cookie`, and still specify additional parameters.
+
+You can force a specific secret key on the session:
+
+```ruby
+enable :sessions
+set :session_secret, '$ecR3t'
+```
+
+Or other optional parameters like this:
+
+```ruby
+enable :sessions
+set :sessions, :key          => 'sinatra.session',
+               :path         => '/',
+               :domain       => 'foo.com',
+               :expire_after => 2592000, # 30 days
+               :secret       => 'change_me'
+```
+
 ### Helper Methods
 
 ```ruby
@@ -41,22 +86,6 @@ Or install it yourself as:
                     Defaults to '/login'
 ```
 
-You can force a specific secret key on the session:
-
-```ruby
-set :session_secret, '$ecR3t'
-```
-
-Or other optional parameters like this:
-
-```ruby
-set :sessions, :key          => 'sinatra.session',
-               :path         => '/',
-               :domain       => 'foo.com',
-               :expire_after => 2592000, # 30 days
-               :secret       => 'change_me'
-```
-
 ## Examples
 
 As with all Sinatra extensions, Sinatra::SessionHelpers may be used in both classic and modular-style apps. First, classic.
@@ -65,6 +94,7 @@ As with all Sinatra extensions, Sinatra::SessionHelpers may be used in both clas
 require 'sinatra'
 require 'sinatra/session_helpers'
 
+enable :sessions
 set :session_fail, '/login'
 set :session_secret, 'So0perSeKr3t!'
 set :sessions, :key => 'my_app'

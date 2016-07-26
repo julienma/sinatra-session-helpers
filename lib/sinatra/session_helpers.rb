@@ -35,9 +35,6 @@ module Sinatra
 
       # This should be set to the redirect URL the client will be sent to if the session is not valid.
       app.set :session_fail, '/login'
-
-      # Enable Sinatra built-in sessions
-      app.enable :sessions
     end
   end
 
