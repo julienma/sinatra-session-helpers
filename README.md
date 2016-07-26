@@ -1,5 +1,7 @@
 # Sinatra::SessionHelpers
 
+[![Gem Version](https://badge.fury.io/rb/sinatra-session_helpers.svg)](https://badge.fury.io/rb/sinatra-session_helpers)
+
 Helper methods for Sinatra's :sessions management
 
 This is the same code than https://github.com/mjackson/sinatra-session, but adapted to use Sinatra's built-in `sessions`, instead of `Rack::Session::Cookie`.
